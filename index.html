@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Progressive Web Apps</title>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/white.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<script src="//localhost:35729/livereload.js"></script>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section style="height: 100%">
+					<img src="img/pwa-dev-summit-logo.png">
+                    <audio controls="controls" style="position: absolute; bottom: 300px; left: 50%; margin-left: -150px ">
+                        <source src="theme.wav" type="audio/wav"/>
+                    </audio>
+				</section>
+
+				<section>
+					<h3>Progressive?</h3>
+                    <br>
+                    <ul>
+                        <li>new software development methodology</li>
+                        <li>progressive enhancement ("fortlaufende Verbesserung")</li>
+                    </ul>
+				</section>
+
+				<section>
+                    <style>
+                        .slides section ul li {
+                            margin-bottom: 10px;
+                        }
+                    </style>
+                    <ul style="font-size: 22px">
+                        <li><strong>Progressive</strong> - Work for every user, regardless of browser choice because they’re built with progressive enhancement as a core tenet.</li>
+                        <li><strong>Responsive</strong> - Fit any form factor: desktop, mobile, tablet, or whatever is next.</li>
+                        <li><strong>Connectivity independent</strong> - Enhanced with service workers to work offline or on low quality networks.</li>
+                        <li><strong>App-like</strong> - Feel like an app to the user with app-style interactions and navigation because they’re built on the app shell model.</li>
+                        <li><strong>Fresh</strong> - Always up-to-date thanks to the service worker update process.</li>
+                        <li><strong>Safe</strong> - Served via HTTPS to prevent snooping and ensure content hasn’t been tampered with.</li>
+                        <li><strong>Discoverable</strong> - Are identifiable as “applications” thanks to W3C manifests and service worker registration scope allowing search engines to find them.</li>
+                        <li><strong>Re-engageable</strong> - Make re-engagement easy through features like push notifications.</li>
+                        <li><strong>Installable</strong> - Allow users to “keep” apps they find most useful on their home screen without the hassle of an app store.</li>
+                        <li><strong>Linkable</strong> - Easily share via URL and not require complex installation.</li>
+                    </ul>
+				</section>
+
+
+                <section>
+                    <h2>HTTPS</h2>
+                    <ul>
+                        <li>secure</li>
+                        <li>free (<a href="https://letsencrypt.org/">lets encrypted</a>)</li>
+                        <li>Google Services need HTTPS (GeoAPI)</li>
+                        <li>HTTP/2</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>HTTP/2</h2>
+                    <ul>
+                        <li>SPDY</li>
+                        <li>multiplexing</li>
+                        <li>over 9000</li>
+                        <li>binary</li>
+                        <li>compressed headers</li>
+                        <li>push</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2><a href="https://http2.akamai.com/demo">Demo</a></h2>
+                </section>
+
+                <section>
+                    <img height="700px" src="img/http2.png">
+                </section>
+
+                <section>
+                    <h2>HTTP/2</h2>
+                    <ul>
+                        <li>
+                            OpenSSL 1.0.2
+                        </li>
+                        <li>
+                            Nginx 1.10
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    nginx.conf
+                    <code><pre>listen 443 ssl</pre></code>
+                </section>
+
+                <section>
+                    nginx.conf
+                    <code><pre>listen 443 ssl http2;</pre></code>
+                </section>
+
+                <section>
+                    <img src="https://cdn.meme.am/instances/500x/64449823.jpg">
+                </section>
+
+                <section>
+                    <h2><a href="https://tools.keycdn.com/http2-test">Demo</a></h2>
+                </section>
+
+				<section>
+					<h3>App-like</h3>
+                    <ul>
+                        <li>Homescreen Icon</li>
+                        <li>Splash Screen</li>
+                        <li>Full-Screen (no URL bar)</li>
+                        <li>Control of the screen orientation</li>
+                        <li>Works offline</li>
+                    </ul>
+				</section>
+
+				<section>
+					<h3>manifest.json</h3>
+
+                    <pre>
+                        <code data-trim data-noescape>
+{
+    "name": "Weather",
+    "short_name": "Weather",
+    "icons": [{
+            "src": "images/icons/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        }, {
+            "src": "images/icons/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        }...],
+    "start_url": "/index.html",
+    "display": "standalone",
+    ​​"orientation": "portrait-primary"
+    "background_color": "#3E4EB8",
+    "theme_color": "#2F3BA2"
+}
+                        </code>
+                    </pre>
+				</section>
+
+                <section>
+                    <img src="img/add-to-home-screen.gif">
+                </section>
+
+                <section>
+                    <h4>Service Workers</h4>
+
+                    <ul>
+                        <li> script that is run by your browser in the background</li>
+                        <li>Ability to intercept and handle network requests</li>
+                        <li>Offline capabilities</li>
+                        <li>Push notifications</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="img/sw_model.png"/>
+                </section>
+
+                <section>
+                    <h3>Application shell model</h3>
+
+                    <ul>
+                        <li>minimal HTML, CSS, and JavaScript powering a user interface</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <img src="img/appshell-1.jpg">
+                </section>
+
+                <section>
+                    <h4>Offline First</h4>
+                    <a href="https://youtu.be/qDJAz3IIq18?list=PLNYkxOF6rcIAWWNR_Q6eLPhsyx6VvYjVb&t=44" target="_blank">Instant-loading Offline First with Jake Archibald</a>
+                </section>
+
+                <section>
+                    <h4>
+                        Overwatch App
+                    </h4>
+                </section>
+
+                <section>
+                    <h4>index.html</h4>
+                    <pre>
+                        <code>
+<script>
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then(function() { console.log("SW Registered"); });
+    }
+</script>
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h4>Install</h4>
+
+                    <pre>
+                        <code>
+self.addEventListener('install', function(e) {
+    e.waitUntil(
+        caches.open('overheroes').then(function(cache) {
+            return cache.addAll([
+                '/',
+                '/index.html',
+                '/heroes',
+                '/css/overheroes.css',
+                '/js/overheroes.js'
+            ]);
+        })
+    );
+});
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h4>Cache First</h4>
+
+                    <pre>
+                        <code style="font-size: 15px">
+//sw.js
+self.addEventListener('fetch', function(event) {
+    event.respondWith(
+        caches.open('overheroes').then(function(cache) {
+            return cache.match(event.request).then(function (response) {
+                return response || fetch(event.request).then(function(response) {
+                    cache.put(event.request, response.clone());
+                    return response;
+                });
+            });
+        })
+    );
+});
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <img src="img/sw_model.png"/>
+                </section>
+
+                <section>
+                    <a href="https://overwatch-web.herokuapp.com/" target="_blank">Overheroes Demo</a>
+                </section>
+
+                <section>
+                    <h3>sw-toolbox.js</h3>
+                    <br>
+                    <ul>
+                        <li>toolbox.networkFirst</li>
+                        <li>toolbox.cacheFirst</li>
+                        <li>toolbox.fastest</li>
+                        <li>toolbox.cacheOnly</li>
+                        <li>toolbox.networkOnly</li>
+                        <li>toolbox.router.get(urlPattern, handler, options)</li>
+                        <li>other methods</li>
+                    </ul>
+                </section>
+
+
+
+
+
+                <section>
+                    <h1>Push</h1>
+                </section>
+
+                <section>
+                    Google Cloud Messaging
+                </section>
+
+
+
+                <section>
+                    <img src="http://cdn.thedroidguy.com/wp-content/uploads/2013/08/google-cloud-messaging.jpg">
+                </section>
+
+                <section>
+                    manifest.json
+                    <code><pre>
+{
+  "name": "My PWA",
+  "gcm_sender_id": "593836075156"
+}
+</pre></code>
+                </section>
+
+                <section>
+                    Subscribe
+                    <pre><code>
+if ('serviceWorker' in navigator) {
+    console.log('Service Worker is supported');
+    navigator.serviceWorker.register('sw.js').then(function(reg) {
+        reg.pushManager.subscribe({
+            userVisibleOnly: true
+        });
+    }).catch(function(error) {
+        console.log(':^(', error);
+    });
+}
+                    </code>   </pre>
+                </section>
+
+                <section>
+                    Device Endpoint
+                    <p style="font-size: 25px">
+                        https://android.googleapis.com/gcm/send/APA91bGdUldXgd4Eu9MD0....
+                    </p>
+                </section>
+
+                <section>
+                    Messsage
+                    <pre><code>
+self.addEventListener('push', function(event) {
+    var title = 'Push message';
+    event.waitUntil(
+        self.registration.showNotification(title, {
+        body: 'The Message',
+        icon: 'images/icon.png'
+    }));
+});
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h2><a href="https://gauntface.github.io/simple-push-demo/">Demo</a></h2>
+                </section>
+
+                <section>
+                    <h2>Speeds vary</h2>
+                    <h4>Round trip times increase as bandwidth decreases</h4>
+                    <ul>
+                        <li>+50 ms WiFi</li>
+                        <li>+500 ms 3G</li>
+                        <li>+2500 ms 2g</li>
+                    </ul>
+                </section>
+
+                <section data-background-color="white">
+                    <img src="https://developers.google.com/speed/docs/insights/images/1stimeline.png">
+                </section>
+
+
+                <section>
+                    <h1>Examples</h1>
+                    <ul>
+                        <li><a href="https://www.booking.com">booking.com</a></li>
+                        <li><a href="https://airhorner.com">airhorner.com</a></li>
+                        <li><a href="https://pwa.rocks">pwa.rocks</a></li>
+
+                    </ul>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>
+                            https://developer.chrome.com/extensions/manifest
+                        </li>
+                        <li>
+                            https://developers.google.com/web/fundamentals/getting-started/push-notifications/
+                        </li>
+                    </ul>
+                </section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'none',
+
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+	</body>
+</html>
